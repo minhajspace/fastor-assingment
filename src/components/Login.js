@@ -16,8 +16,8 @@ class Login extends React.Component {
                 "dial_code": "+91"
             })
             .then((res) => {
-                console.log(res)
                 this.props.history.push("/otp", { phone, "dial_code": "+91" })
+
             }).catch((err) => {
                 console.log(err)
             })

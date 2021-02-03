@@ -56,9 +56,7 @@ class RestaurantList extends React.Component {
 
                                     <h1 className="text-xl my-2 font-semibold flex-1"> {value.restaurant_name}</h1>
 
-                                    <span className="text-xl my-2 font-semibold w-10"> <img alt="icon" /></span>
 
-                                    <hr />
                                 </div>
 
 
