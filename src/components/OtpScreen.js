@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+import { login_user } from '../redux/actions/index'
+import { connect } from 'react-redux'
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
+
 
 
 const OtpScreen = (props) => {
@@ -20,18 +26,23 @@ const OtpScreen = (props) => {
             dial_code,
             "otp": varify
         }).then((res) => {
+            cookies.set("token", res.data.data.token)
             history.push({
                 pathname: "/restaurant-list",
                 res
             })
+
+            props.login_user(res)
         }).catch((err) => {
             console.log(err)
         })
 
 
     }
+
     return (
-        <div>
+
+        < div >
             <form className="mt-8 space-y-6"  >
                 <input type="hidden" name="remember" value="true" />
                 <div className="rounded-md shadow-sm -space-y-px">
@@ -51,8 +62,13 @@ const OtpScreen = (props) => {
         </button>
                 </div>
             </form>
-        </div>
+        </div >
     )
 }
+const mapStatetoProps = (state) => {
+    return {
+        state: state
+    }
+}
 
-export default OtpScreen
+export default connect(mapStatetoProps, { login_user })(OtpScreen)

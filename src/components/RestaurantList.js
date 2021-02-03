@@ -1,24 +1,36 @@
 import React from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import { signup_user } from '../redux/actions/index'
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 class RestaurantList extends React.Component {
 
     state = {
         data: "",
-        loading: true
+        loading: true,
+        token: ""
 
     }
 
     getData = () => {
-        const token = this.props.location.res.data.data.token
+        const token = cookies.get("token")
+        // this.setState({ token: this.props.location.res.data.data.token })
+        // const token = this.props.location.res.data.data.token;
+        // const { token } = this.state
         console.log(token)
+        this.setState({ token })
+        console.log(this.state.token)
         axios.get('https://staging.fastor.in/v1/m/restaurant?city_id=118', {
             headers: {
                 'Authorization': token
             }
         })
             .then((res) => {
+                console.log(res)
                 this.setState({ data: res.data })
+                this.props.signup_user(res.data)
                 console.log(this.state)
                 this.setState({ loading: false })
             })
@@ -36,9 +48,12 @@ class RestaurantList extends React.Component {
         this.getData()
     }
     render() {
-        console.log(this.props.location.res.data)
+        // console.log(this.props.location.res.data)
+        console.log(this.props)
+        console.log(this.state.data)
+        console.log(this.props.list)
 
-        const list = this.state.data && this.state.data.map((value) => {
+        const list = this.props.list && this.props.list.map((value) => {
             return <div onClick={this.handleClick(value)}
                 key={value.restaurant_id}
             >
@@ -73,5 +88,10 @@ class RestaurantList extends React.Component {
     }
 }
 
+const mapStatetoProps = (state) => {
+    return {
+        list: state.signupReducer.item,
 
-export default RestaurantList
+    }
+}
+export default connect(mapStatetoProps, { signup_user })(RestaurantList)

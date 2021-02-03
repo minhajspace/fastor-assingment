@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
+
 class Login extends React.Component {
     state = {
         mobile: ""
@@ -17,7 +18,7 @@ class Login extends React.Component {
             })
             .then((res) => {
                 this.props.history.push("/otp", { phone, "dial_code": "+91" })
-
+                this.props.signup_user({ phone, "dial_code": "+91" })
             }).catch((err) => {
                 console.log(err)
             })
@@ -25,6 +26,7 @@ class Login extends React.Component {
     }
 
     render() {
+        console.log(this.props.authData)
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
@@ -61,4 +63,6 @@ class Login extends React.Component {
         )
     }
 }
+
+
 export default Login
