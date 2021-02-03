@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import { login_user } from '../redux/actions/index'
-import { connect } from 'react-redux'
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
@@ -12,14 +10,10 @@ const cookies = new Cookies();
 const OtpScreen = (props) => {
     const history = useHistory();
     const [otp, setOtp] = useState()
-    console.log(props)
-
 
     const handleOtp = (e) => {
         e.preventDefault()
-        console.log(otp)
         const { phone, dial_code } = props.location.state
-        console.log(phone, dial_code)
         const varify = Number(otp)
         axios.post('https://staging.fastor.in/v1/pwa/user/login', {
             phone,
@@ -31,8 +25,6 @@ const OtpScreen = (props) => {
                 pathname: "/restaurant-list",
                 res
             })
-
-            props.login_user(res)
         }).catch((err) => {
             console.log(err)
         })
@@ -65,10 +57,6 @@ const OtpScreen = (props) => {
         </div >
     )
 }
-const mapStatetoProps = (state) => {
-    return {
-        state: state
-    }
-}
 
-export default connect(mapStatetoProps, { login_user })(OtpScreen)
+
+export default OtpScreen
