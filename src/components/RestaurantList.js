@@ -27,12 +27,8 @@ class RestaurantList extends React.Component {
             })
     }
 
-    handleClick = (value) => {
-        this.props.history.push("/restaurant-details", {
-            state: {
-                details: value
-            }
-        });
+    handleClick = value => e => {
+        this.props.history.push("/restaurant-details", { state: value });
     };
 
 
@@ -43,30 +39,27 @@ class RestaurantList extends React.Component {
         console.log(this.props.location.res.data)
 
         const list = this.state.data && this.state.data.map((value) => {
-            return <div className="flex justify-center align-center"  >
-                <body className={`font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover flex justify-center `}>
-
-
-                    <div className="p-4 md:p-4 text-center lg:text-left w-auto mb-2">
-                        <div className="p-4 md:p-4 text-center lg:text-left pr-2 flex-wrap border-2 border-indigo-600 rounded mb-4">
-                            <div className="">
-                                <div className="flex">
-
-
-
-                                    <h1 className="text-xl my-2 font-semibold flex-1"> {value.restaurant_name}</h1>
+            return <div onClick={this.handleClick(value)}
+                key={value.restaurant_id}
+            >
+                <div className="flex justify-center align-center"  >
+                    <body className={`font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover flex justify-center `}>
+                        <div className="p-4 md:p-4 text-center lg:text-left w-auto mb-2">
+                            <div className="p-4 md:p-4 text-center lg:text-left pr-2 flex-wrap border-2 border-indigo-600 rounded mb-4">
+                                <div className="">
+                                    <div className="flex">
+                                        <h1 className="text-xl my-2 font-semibold flex-1"> {value.restaurant_name}</h1>
+                                    </div>
 
 
                                 </div>
-
-
                             </div>
                         </div>
-                    </div>
 
-                </body>
+                    </body>
 
 
+                </div>
             </div>
         })
 
