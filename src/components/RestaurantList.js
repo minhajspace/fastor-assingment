@@ -29,7 +29,7 @@ class RestaurantList extends React.Component {
         })
             .then((res) => {
                 console.log(res)
-                this.setState({ data: res.data })
+                this.setState({ data: res })
                 this.props.signup_user(res.data)
                 console.log(this.state)
                 this.setState({ loading: false })
